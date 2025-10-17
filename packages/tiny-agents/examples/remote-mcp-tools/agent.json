@@ -1,0 +1,36 @@
+{
+	"model": "gpt-4o",
+	"endpointUrl": "https://api.openai.com/v1",
+	"inputs": [
+		{
+			"id": "openai-api-key",
+			"description": "Your OpenAI API key"
+		},
+		{
+			"id": "hf-token",
+			"description": "Your Hugging Face token (for remote MCP servers)"
+		}
+	],
+	"apiKey": "${input:openai-api-key}",
+	"servers": [
+		{
+			"type": "http",
+			"url": "https://example.com/mcp",
+			"headers": {
+				"Authorization": "Bearer ${input:hf-token}"
+			}
+		},
+		{
+			"type": "sse",
+			"url": "https://example.com/mcp/sse",
+			"headers": {
+				"Authorization": "Bearer ${input:hf-token}"
+			}
+		},
+		{
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-fetch"]
+		}
+	]
+}

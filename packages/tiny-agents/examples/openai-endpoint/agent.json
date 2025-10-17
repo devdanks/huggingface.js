@@ -1,0 +1,31 @@
+{
+	"model": "gpt-4o",
+	"endpointUrl": "https://api.openai.com/v1",
+	"inputs": [
+		{
+			"id": "openai-api-key",
+			"description": "Your OpenAI API key"
+		}
+	],
+	"apiKey": "${input:openai-api-key}",
+	"servers": [
+		{
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-filesystem", "."],
+			"env": {}
+		},
+		{
+			"type": "stdio",
+			"command": "npx",
+			"args": ["@playwright/mcp@latest"],
+			"env": {}
+		},
+		{
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-fetch"],
+			"env": {}
+		}
+	]
+}
