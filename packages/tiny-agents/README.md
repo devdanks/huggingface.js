@@ -83,6 +83,15 @@ npx @huggingface/tiny-agents run ./my-agent
 
 Voilà! 🔥
 
+## Examples
+
+Check out the [examples directory](./examples) for complete configuration examples:
+
+- **[OpenAI Endpoint](./examples/openai-endpoint)** - Use OpenAI's API with MCP tools
+- **[Local OpenAI Endpoint](./examples/local-openai-endpoint)** - Use LM Studio, Ollama, or other local servers
+- **[Remote MCP Tools](./examples/remote-mcp-tools)** - Connect to remote MCP servers over HTTP/SSE
+
+Each example includes a complete `agent.json` configuration and detailed README with usage instructions.
 
 ## Tiny Agents collection
 
