@@ -64,6 +64,59 @@ npx @huggingface/tiny-agents run ./examples/[example-name]
 npx @huggingface/tiny-agents serve ./examples/[example-name]
 ```
 
+### Using the OpenAI-Compatible Server
+
+When you run the `serve` command, it starts an HTTP server that implements OpenAI's Chat Completions API:
+
+```bash
+# Start the server (default: http://localhost:9999)
+npx @huggingface/tiny-agents serve ./examples/openai-endpoint
+```
+
+Then connect to it using any OpenAI-compatible client:
+
+```typescript
+// Using the Hugging Face Inference client
+import { chatCompletionStream } from "@huggingface/inference";
+
+for await (const chunk of chatCompletionStream({
+  endpointUrl: "http://localhost:9999/v1/chat/completions",
+  model: "", // Model is configured in agent.json
+  messages: [
+    { role: "user", content: "List files in the current directory" }
+  ],
+})) {
+  console.log(chunk.choices[0]?.delta.content);
+}
+```
+
+```python
+# Using OpenAI's Python SDK
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:9999/v1",
+    api_key="not-needed"  # API key is configured in agent.json
+)
+
+stream = client.chat.completions.create(
+    model="",  # Model is configured in agent.json
+    messages=[
+        {"role": "user", "content": "What files are in this directory?"}
+    ],
+    stream=True
+)
+
+for chunk in stream:
+    if chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content, end="")
+```
+
+This allows you to:
+- Add MCP tool capabilities to any OpenAI-compatible application
+- Use your local models with the OpenAI API format
+- Integrate with existing tools and frameworks that support OpenAI's API
+
 ## Creating Your Own Configuration
 
 Use these examples as templates for your own agent configurations:
